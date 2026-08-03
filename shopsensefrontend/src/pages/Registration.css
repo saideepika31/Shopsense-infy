@@ -1,0 +1,35 @@
+.register{
+    background-color: #272757;
+    color: #8686AC;
+    padding:20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    gap:20px;
+    align-items: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+}
+.register1{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    gap:20px;
+    width:500px;
+    background-color: #272757;
+    padding: 20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    border:2px solid #8686AC;
+}
+.register1 button{
+    border-radius: 12px;
+    background-color: #8686AC;
+    color: black;
+    width:100px;
+    cursor: pointer;
+}
+input{
+    width: 300px;
+}

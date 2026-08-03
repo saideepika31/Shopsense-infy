@@ -1,0 +1,26 @@
+.vprof{
+    background-color: #272757;
+    display: flex;
+    flex-direction: column;
+    border: white;
+    min-height: 100vh;
+    padding: 30px;
+    color:white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    gap:20px;
+}
+.fields{
+    display: flex;
+    gap:20px;
+    justify-content: flex-start;
+    flex-direction: column;
+    font-size: largers;
+
+}
+.fields button{
+    width:120px;
+    height:45px;
+    border-radius: 12px;
+    background-color: #8686AC;
+    color: white;
+}
