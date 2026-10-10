@@ -1,11 +1,20 @@
 from pydantic import BaseModel, EmailStr
+from datetime import datetime
 
+
+# =========================
+# USER SCHEMA
+# =========================
 
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
     role: str
 
+
+# =========================
+# VENDOR SCHEMAS
+# =========================
 
 class VendorCreate(BaseModel):
     business_name: str
@@ -38,6 +47,11 @@ class VendorUpdate(BaseModel):
     phone: str
     address: str
 
+
+# =========================
+# PRODUCT SCHEMAS
+# =========================
+
 class ProductCreate(BaseModel):
     product_name: str
     description: str
@@ -49,6 +63,43 @@ class ProductCreate(BaseModel):
 
 class ProductResponse(ProductCreate):
     product_id: int
+
+    class Config:
+        from_attributes = True
+
+
+# =========================
+# CUSTOMER SCHEMAS
+# =========================
+
+class CustomerCreate(BaseModel):
+    name: str
+    email: EmailStr
+    phone: str
+
+
+class CustomerResponse(CustomerCreate):
+    customer_id: int
+
+    class Config:
+        from_attributes = True
+
+
+# =========================
+# TRANSACTION SCHEMAS
+# =========================
+
+class TransactionCreate(BaseModel):
+    customer_id: int
+    product_id: int
+    vendor_id: int
+    quantity: int
+    total_amount: int
+
+
+class TransactionResponse(TransactionCreate):
+    transaction_id: int
+    transaction_date: datetime
 
     class Config:
         from_attributes = True

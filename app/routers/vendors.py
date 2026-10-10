@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ..database import SessionLocal
-from .. import crud, schemas
+from .. import models, schemas
+
 
 router = APIRouter(
     prefix="/vendor",
@@ -10,21 +11,32 @@ router = APIRouter(
 )
 
 
+# =========================================================
+# DATABASE
+# =========================================================
+
 def get_db():
     db = SessionLocal()
+
     try:
         yield db
     finally:
         db.close()
 
 
+# =========================================================
+# GET VENDOR PROFILE
+# =========================================================
+
 @router.get("/profile/{vendor_id}")
-def get_profile(
+def get_vendor_profile(
     vendor_id: int,
     db: Session = Depends(get_db)
 ):
 
-    vendor = crud.get_vendor(db, vendor_id)
+    vendor = db.query(models.Vendor).filter(
+        models.Vendor.vendor_id == vendor_id
+    ).first()
 
     if not vendor:
         raise HTTPException(
@@ -35,26 +47,41 @@ def get_profile(
     return vendor
 
 
+# =========================================================
+# UPDATE VENDOR PROFILE
+# =========================================================
+
 @router.put("/profile/{vendor_id}")
-def update_profile(
+def update_vendor_profile(
     vendor_id: int,
-    vendor: schemas.VendorUpdate,
+    vendor_data: schemas.VendorUpdate,
     db: Session = Depends(get_db)
 ):
 
-    updated = crud.update_vendor(
-        db,
-        vendor_id,
-        vendor
-    )
+    vendor = db.query(models.Vendor).filter(
+        models.Vendor.vendor_id == vendor_id
+    ).first()
 
-    if not updated:
+    if not vendor:
         raise HTTPException(
             status_code=404,
             detail="Vendor not found"
         )
 
-    return updated
+    vendor.business_name = vendor_data.business_name
+    vendor.owner_name = vendor_data.owner_name
+    vendor.phone = vendor_data.phone
+    vendor.address = vendor_data.address
+
+    db.commit()
+    db.refresh(vendor)
+
+    return vendor
+
+
+# =========================================================
+# ADD PRODUCT
+# =========================================================
 
 @router.post("/product")
 def add_product(
@@ -62,12 +89,68 @@ def add_product(
     db: Session = Depends(get_db)
 ):
 
-    return crud.create_product(db, product)
+    vendor = db.query(models.Vendor).filter(
+        models.Vendor.vendor_id == product.vendor_id
+    ).first()
 
+    if not vendor:
+        raise HTTPException(
+            status_code=404,
+            detail="Vendor not found"
+        )
+
+    new_product = models.Product(
+        product_name=product.product_name,
+        description=product.description,
+        price=product.price,
+        quantity=product.quantity,
+        category=product.category,
+        vendor_id=product.vendor_id
+    )
+
+    db.add(new_product)
+    db.commit()
+    db.refresh(new_product)
+
+    return new_product
+
+
+# =========================================================
+# GET ALL PRODUCTS
+# =========================================================
 
 @router.get("/products")
-def view_products(
+def get_products(
     db: Session = Depends(get_db)
 ):
 
-    return crud.get_products(db)
+    products = db.query(models.Product).all()
+
+    return products
+
+
+# =========================================================
+# GET PRODUCTS OF ONE VENDOR
+# =========================================================
+
+@router.get("/products/{vendor_id}")
+def get_vendor_products(
+    vendor_id: int,
+    db: Session = Depends(get_db)
+):
+
+    vendor = db.query(models.Vendor).filter(
+        models.Vendor.vendor_id == vendor_id
+    ).first()
+
+    if not vendor:
+        raise HTTPException(
+            status_code=404,
+            detail="Vendor not found"
+        )
+
+    products = db.query(models.Product).filter(
+        models.Product.vendor_id == vendor_id
+    ).all()
+
+    return products

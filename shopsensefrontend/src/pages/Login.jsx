@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import AnimatedBackground from "../Components/AnimatedBackground";
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
 
@@ -10,8 +10,12 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("Vendor");
+    const [loading, setLoading] = useState(false);
 
-    const handleLogin = async () => {
+
+    const handleLogin = async (e) => {
+
+        e.preventDefault();
 
         if (!email || !password) {
             alert("Please enter Email and Password");
@@ -20,133 +24,309 @@ function Login() {
 
         try {
 
-            const response = await fetch("http://127.0.0.1:8000/auth/login", {
+            setLoading(true);
 
-                method: "POST",
+            const response = await fetch(
+                "http://127.0.0.1:8000/auth/login",
+                {
+                    method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
 
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                }
+            );
 
-            });
 
             const data = await response.json();
 
-            if (response.ok) {
+            console.log("LOGIN RESPONSE:", data);
 
-                alert("Login Successful!");
 
-                localStorage.setItem("token", data.access_token);
-                localStorage.setItem("role", data.role);
+            // =========================
+            // LOGIN FAILED
+            // =========================
 
-                if (data.role === "Vendor") {
+            if (!response.ok) {
 
-                    navigate("/vendor");
+                alert(
+                    data.detail ||
+                    "Invalid Email or Password"
+                );
 
-                } else {
+                return;
+            }
 
-                    navigate("/admin");
 
-                }
+            // =========================
+            // GET VENDOR ID
+            // =========================
+
+            const vendorId = data.vendor_id;
+
+
+            console.log(
+                "Logged in Vendor ID:",
+                vendorId
+            );
+
+
+            // =========================
+            // SAVE LOGIN INFORMATION
+            // =========================
+
+            localStorage.setItem(
+                "token",
+                data.access_token
+            );
+
+            localStorage.setItem(
+                "role",
+                data.role
+            );
+
+            localStorage.setItem(
+                "email",
+                data.email
+            );
+
+
+            // =========================
+            // SAVE VENDOR ID
+            // =========================
+
+            if (
+                vendorId !== undefined &&
+                vendorId !== null
+            ) {
+
+                localStorage.setItem(
+                    "vendor_id",
+                    String(vendorId)
+                );
+
+            }
+
+
+            console.log(
+                "STORED VENDOR ID:",
+                localStorage.getItem("vendor_id")
+            );
+
+
+            // =========================
+            // LOGIN SUCCESS
+            // =========================
+
+            alert("Login Successful!");
+
+
+            // =========================
+            // REDIRECT
+            // =========================
+
+            if (
+                data.role &&
+                data.role.toLowerCase() === "vendor"
+            ) {
+
+                navigate("/Vendordashboard");
 
             } else {
 
-                alert(data.detail);
+                navigate("/admin");
 
             }
 
         } catch (error) {
 
-            console.error(error);
-            alert("Server Error");
+            console.error(
+                "Login Error:",
+                error
+            );
+
+            alert(
+                "Unable to connect to server."
+            );
+
+        } finally {
+
+            setLoading(false);
 
         }
 
     };
 
-    return (
-        <>
-            <AnimatedBackground />
 
-            <div className="login-cont">
+    return (
+
+        <div className="login-page">
+
+            <div className="login-container">
 
                 <h1>ShopSense</h1>
 
-                <div className="loginp">
+                <h2>Welcome Back</h2>
 
-                    <h4>Welcome Back</h4>
 
-                    <label>Email</label>
+                <form onSubmit={handleLogin}>
 
-                    <input
-                        type="email"
-                        placeholder="Enter Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
 
-                    <label>Password</label>
+                    {/* EMAIL */}
 
-                    <input
-                        type="password"
-                        placeholder="Enter Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-
-                    <a href="/forgotpassword">
-                        Forgot Password?
-                    </a>
-
-                    <label>Login As:</label>
-
-                    <div className="radios">
+                    <div className="input-group">
 
                         <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) =>
+                                setEmail(e.target.value)
+                            }
+                            placeholder="Enter your email"
+                        />
+
+                    </div>
+
+
+                    {/* PASSWORD */}
+
+                    <div className="input-group">
+
+                        <label>
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) =>
+                                setPassword(e.target.value)
+                            }
+                            placeholder="Enter your password"
+                        />
+
+                    </div>
+
+
+                    {/* FORGOT PASSWORD */}
+
+                    <div className="forgot-password">
+
+                        <a
+                            href="/forgotpwd"
+                            onClick={(e) => {
+
+                                e.preventDefault();
+
+                                navigate("/forgot-password");
+
+                            }}
+                        >
+                            Forgot Password?
+                        </a>
+
+                    </div>
+
+
+                    {/* LOGIN AS */}
+
+                    <div className="login-as">
+
+                        <p>
+                            Login As:
+                        </p>
+
+
+                        <label>
+
                             <input
                                 type="radio"
                                 name="role"
                                 value="Admin"
                                 checked={role === "Admin"}
-                                onChange={(e) => setRole(e.target.value)}
+                                onChange={(e) =>
+                                    setRole(e.target.value)
+                                }
                             />
+
                             Admin
+
                         </label>
 
+
                         <label>
+
                             <input
                                 type="radio"
                                 name="role"
                                 value="Vendor"
                                 checked={role === "Vendor"}
-                                onChange={(e) => setRole(e.target.value)}
+                                onChange={(e) =>
+                                    setRole(e.target.value)
+                                }
                             />
+
                             Vendor
+
                         </label>
 
                     </div>
 
+
+                    {/* LOGIN BUTTON */}
+
                     <button
-                        className="loginbtn"
-                        onClick={handleLogin}
+                        type="submit"
+                        disabled={loading}
                     >
-                        Login
+
+                        {loading
+                            ? "Logging in..."
+                            : "Login"
+                        }
+
                     </button>
 
-                    <a href="/register">
+
+                </form>
+
+
+                {/* REGISTER */}
+
+                <div className="register-link">
+
+                    <a
+                        href="/register"
+                        onClick={(e) => {
+
+                            e.preventDefault();
+
+                            navigate("/register");
+
+                        }}
+                    >
                         Register as Vendor
                     </a>
 
                 </div>
 
+
             </div>
-        </>
+
+        </div>
+
     );
+
 }
+
 
 export default Login;

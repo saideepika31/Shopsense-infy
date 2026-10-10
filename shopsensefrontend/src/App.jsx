@@ -1,28 +1,67 @@
-import { useState } from 'react'
-import Login from './pages/Login'
-import Registration from './pages/Registration'
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
+import Forgotpwd from "./pages/Forgotpwd";
+import Vendor from "./pages/Vendor";
+import Vendorprofile from "./pages/Vendorprofile";
+import Products from "./pages/Products";
+import Admin from "./pages/Admin";
 import { Routes, Route } from "react-router-dom";
-import Forgotpwd from './pages/Forgotpwd';
-import Vendor from './pages/Vendor';
-import Vendorprofile from './pages/Vendorprofile';
-import Products from "./Pages/Products";
+
+
 function App() {
 
-
   return (
-    <>
-    
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Registration />} />
-        <Route path="/forgot-password" element={<Forgotpwd />}/>
-        <Route path="/Vendordashboard" element={<Vendor/>}/>
-        <Route path="/Vendorprofile" element={<Vendorprofile/>}/>
-        <Route path="/products" element={<Products/>}/>
-      </Routes>
-    </>
+    <Routes>
 
-  )
-  }
+      {/* LOGIN */}
+      <Route
+        path="/login"
+        element={<Login />}
+      />
 
-export default App
+      {/* VENDOR REGISTRATION */}
+      <Route
+        path="/register"
+        element={<Registration />}
+      />
+
+      {/* FORGOT PASSWORD */}
+      <Route
+        path="/forgot-password"
+        element={<Forgotpwd />}
+      />
+
+      {/* VENDOR DASHBOARD */}
+      <Route
+        path="/Vendordashboard"
+        element={<Vendor />}
+      />
+
+      {/* VENDOR PROFILE */}
+      <Route
+        path="/Vendorprofile"
+        element={<Vendorprofile />}
+      />
+
+      {/* PRODUCTS */}
+      <Route
+        path="/products"
+        element={<Products />}
+      />
+
+      {/* ADMIN DASHBOARD */}
+      <Route
+        path="/admin"
+        element={<Admin />}
+      />
+      {/*Vendor Profile*/
+        <Route
+          path="/Vendorprofile"
+          element={<Vendorprofile />}
+        />}
+    </Routes>
+  );
+}
+
+
+export default App;

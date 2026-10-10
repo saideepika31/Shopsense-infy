@@ -1,0 +1,826 @@
+/* =========================================
+   SHOP SENSE ADMIN DASHBOARD
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+.admin-page {
+    min-height: 100vh;
+
+    display: flex;
+
+    background: #272757;
+
+    color: white;
+
+    font-family:
+        'Gill Sans',
+        'Gill Sans MT',
+        Calibri,
+        'Trebuchet MS',
+        sans-serif;
+}
+
+
+/* =========================================
+   SIDEBAR
+   ========================================= */
+
+.admin-sidebar {
+    width: 250px;
+    min-height: 100vh;
+
+    padding: 28px 18px;
+
+    background: #1f1f4a;
+
+    display: flex;
+    flex-direction: column;
+
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+
+
+/* LOGO */
+
+.admin-logo {
+    padding: 5px 12px 35px;
+}
+
+.admin-logo h1 {
+    margin: 0;
+
+    font-size: 28px;
+
+    color: white;
+}
+
+.admin-logo span {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    color: #8686AC;
+}
+
+
+/* NAVIGATION */
+
+.admin-sidebar nav {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.admin-sidebar nav button {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: #b8b8d0;
+
+    text-align: left;
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.admin-sidebar nav button:hover {
+    background: #505081;
+
+    color: white;
+
+    transform: translateX(3px);
+}
+
+.admin-sidebar nav button.active {
+    background: #505081;
+
+    color: white;
+
+    box-shadow:
+        0 6px 15px rgba(0,0,0,0.18);
+}
+
+
+/* SIDEBAR BOTTOM */
+
+.admin-sidebar-bottom {
+    margin-top: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+
+.admin-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px;
+
+    border-top: 1px solid rgba(255,255,255,0.1);
+
+    padding-top: 20px;
+}
+
+
+.admin-avatar {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #8686AC;
+
+    color: white;
+
+    font-weight: bold;
+}
+
+
+.admin-user strong {
+    display: block;
+
+    font-size: 14px;
+}
+
+.admin-user span {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 11px;
+
+    color: #8686AC;
+}
+
+
+/* LOGOUT */
+
+.logout-admin {
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #b8b8d0;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.logout-admin:hover {
+    background: #505081;
+
+    color: white;
+}
+
+
+/* =========================================
+   MAIN
+   ========================================= */
+
+.admin-main {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 35px 40px;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   CONTENT
+   ========================================= */
+
+.admin-dashboard-content {
+    max-width: 1450px;
+
+    margin: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 25px;
+}
+
+
+/* WELCOME */
+
+.admin-welcome {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.admin-welcome h1 {
+    margin: 0;
+
+    font-size: 32px;
+}
+
+.admin-welcome p {
+    margin: 7px 0 0;
+
+    color: #c7c7da;
+
+    font-size: 16px;
+}
+
+
+.admin-status {
+    padding: 9px 15px;
+
+    border-radius: 20px;
+
+    background: rgba(134,134,172,0.2);
+
+    color: #d2d2e5;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   CARDS
+   ========================================= */
+
+.admin-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+.admin-card {
+    min-height: 125px;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    background: #505081;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.16);
+
+    transition: 0.25s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 30px rgba(0,0,0,0.22);
+}
+
+
+.admin-card-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: rgba(255,255,255,0.12);
+
+    font-size: 22px;
+}
+
+
+.admin-card p {
+    margin: 0 0 5px;
+
+    color: #d0d0df;
+
+    font-size: 14px;
+}
+
+.admin-card h2 {
+    margin: 0;
+
+    font-size: 25px;
+
+    color: white;
+}
+
+
+/* =========================================
+   PANELS
+   ========================================= */
+
+.admin-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+
+.admin-panel {
+    padding: 23px;
+
+    background: white;
+
+    color: #272757;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.16);
+}
+
+
+.full-panel {
+    width: 100%;
+}
+
+
+.panel-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+
+.panel-header h2 {
+    margin: 0;
+
+    font-size: 20px;
+}
+
+.panel-header p {
+    margin: 4px 0 0;
+
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   OVERVIEW
+   ========================================= */
+
+.overview-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.overview-list > div {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 13px 15px;
+
+    border-radius: 9px;
+
+    background: #f4f4f8;
+}
+
+.overview-list span {
+    font-size: 14px;
+}
+
+.overview-list strong {
+    font-size: 16px;
+}
+
+
+/* =========================================
+   TOP PRODUCTS
+   ========================================= */
+
+.top-products {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.top-product {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px;
+
+    border-radius: 9px;
+
+    background: #f5f5f8;
+}
+
+
+.product-rank {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #505081;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+.product-info {
+    flex: 1;
+}
+
+.product-info strong {
+    display: block;
+
+    font-size: 14px;
+}
+
+.product-info span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #888;
+
+    font-size: 12px;
+}
+
+
+.product-sales {
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #505081;
+}
+
+
+/* =========================================
+   INVENTORY
+   ========================================= */
+
+.alert-badge {
+    padding: 6px 11px;
+
+    border-radius: 15px;
+
+    background: #eeeef6;
+
+    color: #505081;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.inventory-alerts {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+
+.inventory-item {
+    padding: 13px 15px;
+
+    border-radius: 10px;
+
+    background: #f5f5f8;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.inventory-item strong {
+    display: block;
+
+    font-size: 14px;
+}
+
+.inventory-item span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #888;
+
+    font-size: 12px;
+}
+
+
+.stock-danger {
+    color: #b04b4b !important;
+}
+
+.stock-good {
+    color: #505081;
+}
+
+
+.healthy-inventory {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 17px;
+
+    border-radius: 10px;
+
+    background: #f4f4f8;
+}
+
+.healthy-inventory > span {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #505081;
+
+    color: white;
+}
+
+.healthy-inventory strong {
+    font-size: 14px;
+}
+
+.healthy-inventory p {
+    margin: 3px 0 0;
+
+    color: #777;
+
+    font-size: 12px;
+}
+
+
+/* =========================================
+   TABLES
+   ========================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 650px;
+}
+
+
+th,
+td {
+    padding: 14px 12px;
+
+    text-align: left;
+
+    border-bottom: 1px solid #e5e5eb;
+
+    font-size: 14px;
+}
+
+
+th {
+    color: #666;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+
+tbody tr:hover {
+    background: #f7f7fa;
+}
+
+
+td strong {
+    color: #272757;
+}
+
+
+/* =========================================
+   SECTION TITLE
+   ========================================= */
+
+.section-title {
+    margin-bottom: 5px;
+}
+
+.section-title h1 {
+    margin: 0;
+
+    font-size: 30px;
+}
+
+.section-title p {
+    margin: 6px 0 0;
+
+    color: #c7c7da;
+
+    font-size: 15px;
+}
+
+
+/* =========================================
+   EMPTY / LOADING
+   ========================================= */
+
+.empty-admin {
+    padding: 35px;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+.admin-loading {
+    min-height: 80vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #c7c7da;
+
+    font-size: 18px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1100px) {
+
+    .admin-cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .admin-page {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 15px;
+    }
+
+    .admin-logo {
+        padding-bottom: 15px;
+    }
+
+    .admin-sidebar nav {
+        flex-direction: row;
+
+        flex-wrap: wrap;
+    }
+
+    .admin-sidebar nav button {
+        width: auto;
+
+        flex: 1;
+    }
+
+    .admin-sidebar-bottom {
+        display: none;
+    }
+
+    .admin-main {
+        padding: 25px 18px;
+    }
+
+    .admin-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-welcome {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .inventory-alerts {
+        grid-template-columns: 1fr;
+    }
+
+}

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Registration.css";
 import AnimatedBackground from "../Components/AnimatedBackground";
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
   const [businessName, setBusinessName] = useState("");
@@ -9,7 +10,7 @@ function Registration() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const navigate = useNavigate();
   const handleRegister = async () => {
     if (
       !businessName ||
@@ -119,7 +120,9 @@ function Registration() {
 
           <a href="#">Already have an account?</a>
 
-          <button>Login</button>
+          <button onClick={() => navigate("/login")}>
+            Login
+          </button>
         </div>
       </div>
     </>

@@ -1,6 +1,14 @@
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-DB_URL = "mysql+pymysql://root:Deepik%4031@localhost:3306/shopsense"
+
+load_dotenv()
+
+DB_URL = os.getenv("DATABASE_URL")
+if not DB_URL:
+    raise ValueError("DATABASE_URL environment variable not set")
+
 engine = create_engine(DB_URL)
 SessionLocal = sessionmaker(
     autocommit=False,
